@@ -1152,7 +1152,7 @@
 };
             defs["Offer"] = {
   "title" : "Offer",
-  "required" : [ "id", "name" ],
+  "required" : [ "name" ],
   "type" : "object",
   "properties" : {
     "id" : {
@@ -1241,10 +1241,7 @@
       "type" : "array",
       "nullable" : true,
       "items" : {
-        "type" : "string",
-        "x-stoplight" : {
-          "id" : "h7l8kyjfgjzan"
-        }
+        "$ref" : "#/components/schemas/Reseller"
       },
       "x-stoplight" : {
         "id" : "3gth378p1tzxu"
@@ -1286,12 +1283,10 @@
   "type" : "object",
   "properties" : {
     "subscriptionLength" : {
-      "type" : "string",
-      "enum" : [ "Month", "1-Year", "2-Year", "3-Year" ]
+      "type" : "integer"
     },
     "billingInterval" : {
-      "type" : "string",
-      "enum" : [ "One-time", "Per month", "Per year" ],
+      "type" : "integer",
       "x-stoplight" : {
         "id" : "dl5bkaky5usfg"
       }
@@ -1302,7 +1297,7 @@
         "id" : "v48p8b70ttx0w"
       }
     },
-    "price" : {
+    "amount" : {
       "type" : "number",
       "format" : "double",
       "x-stoplight" : {
@@ -1312,11 +1307,19 @@
   }
 };
             defs["PricePlan"] = {
+  "required" : [ "productId" ],
   "type" : "object",
   "properties" : {
     "id" : {
       "type" : "string",
       "format" : "guid"
+    },
+    "productId" : {
+      "type" : "string",
+      "format" : "Guid",
+      "x-stoplight" : {
+        "id" : "pg1h2ojawljl7"
+      }
     },
     "name" : {
       "type" : "string",
@@ -1367,6 +1370,18 @@
       "nullable" : true,
       "x-stoplight" : {
         "id" : "qpac8a0r6jchl"
+      }
+    },
+    "maxUsersEnabled " : {
+      "type" : "boolean",
+      "x-stoplight" : {
+        "id" : "zkincw4qtip09"
+      }
+    },
+    "minUsersEnabled" : {
+      "type" : "boolean",
+      "x-stoplight" : {
+        "id" : "kn9xg8pioebvn"
       }
     }
   }
@@ -1469,6 +1484,13 @@
       "x-stoplight" : {
         "id" : "gexm1gp21uz1y"
       }
+    },
+    "id" : {
+      "type" : "string",
+      "nullable" : true,
+      "x-stoplight" : {
+        "id" : "hiknszccearle"
+      }
     }
   }
 };
@@ -1494,10 +1516,7 @@
       }
     },
     "pricePlans" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "woy1jz7c8a2ii"
-      }
+      "$ref" : "#/components/schemas/PricePlan"
     },
     "created" : {
       "type" : "string",
@@ -1607,23 +1626,21 @@
     "id" : {
       "type" : "string"
     },
-    "partnerId" : {
+    "info" : {
       "type" : "string",
       "x-stoplight" : {
         "id" : "ba121m2knv8jr"
       }
+    }
+  },
+  "x-examples" : {
+    "Example 1" : {
+      "id" : "13948B2F-BB0A-49B3-AF73-31482EB3A9B4",
+      "info" : "Henson Group - AL"
     },
-    "country" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "cbdp2r6iqslgb"
-      }
-    },
-    "name" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "2d4ayjkhdq6sp"
-      }
+    "Example 2" : {
+      "id" : "7B02A9BE-C1D1-480F-B2A4-5A0865CEA297",
+      "info" : "TD Synnex Corporation - AG"
     }
   }
 };
