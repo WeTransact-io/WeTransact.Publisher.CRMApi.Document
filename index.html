@@ -689,51 +689,6 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs["Address"] = {
-  "title" : "Address",
-  "type" : "object",
-  "properties" : {
-    "addressLine1" : {
-      "type" : "string"
-    },
-    "addressLine2" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "93docvsket91o"
-      }
-    },
-    "city" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "xo6tb9940gyem"
-      }
-    },
-    "country" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "l5ly9a3oarag6"
-      }
-    },
-    "postalCode" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "h3r7vtcljjzux"
-      }
-    },
-    "state" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "p7prg3kgktoi9"
-      }
-    },
-    "region" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "gubh7f6e2oehw"
-      }
-    }
-  }
-};
             defs["ApiResponse"] = {
   "type" : "object",
   "properties" : {
@@ -755,73 +710,61 @@
   "properties" : {
     "website" : {
       "type" : "string"
+    },
+    "accountId" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "odl4a7uqd5yv4"
+      }
+    },
+    "type" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "zh8y5cy0iwq58"
+      }
     }
   },
   "description" : "Customer info from CRM systems"
 };
-            defs["Consent"] = {
-  "title" : "Consent",
-  "type" : "object",
-  "properties" : {
-    "consentToToShareInfoWithOthers" : {
-      "type" : "boolean"
-    },
-    "consentToContact" : {
-      "type" : "boolean",
-      "x-stoplight" : {
-        "id" : "un64l6smjdxrg"
-      }
-    },
-    "consentToMicrosoftToContactSpecificPartners" : {
-      "type" : "boolean",
-      "x-stoplight" : {
-        "id" : "lp2q0prhzllg9"
-      }
-    },
-    "consentToShareReferralWithMicrosoftSellers" : {
-      "type" : "boolean",
-      "x-stoplight" : {
-        "id" : "75l6a24yehdry"
-      }
-    }
-  }
-};
-            defs["Customer"] = {
-  "title" : "Customer",
-  "type" : "object",
-  "properties" : {
-    "id" : {
-      "type" : "string"
-    },
-    "name" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "plwyou01gtyzo"
-      }
-    },
-    "country" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "irciu47cxgvjm"
-      }
-    }
-  },
-  "description" : "Customer info to register a deal with"
-};
             defs["CustomerProfile"] = {
   "title" : "CustomerProfile",
+  "required" : [ "accountId" ],
   "type" : "object",
   "properties" : {
+    "accountId" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "kskbpcosq5k0j"
+      }
+    },
     "name" : {
       "type" : "string"
     },
-    "address" : {
-      "$ref" : "#/components/schemas/Address"
+    "addressLine" : {
+      "type" : "string"
     },
     "isMaccEligible" : {
       "type" : "boolean",
       "x-stoplight" : {
         "id" : "m436yjtlleipe"
+      }
+    },
+    "city" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "2g0wzoel6z0qg"
+      }
+    },
+    "country" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "2o8pbb1ut0cd5"
+      }
+    },
+    "isManaged" : {
+      "type" : "boolean",
+      "x-stoplight" : {
+        "id" : "vh0pv003lkqtt"
       }
     }
   },
@@ -856,7 +799,10 @@
       "type" : "string"
     },
     "solution" : {
-      "$ref" : "#/components/schemas/Solution"
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Solution"
+      }
     },
     "teamMembers" : {
       "type" : "array",
@@ -927,36 +873,28 @@
         "id" : "qtdsbi617nei6"
       }
     },
-    "eTag" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "khxftrrfoa3g4"
-      }
-    },
     "salesStage" : {
       "type" : "string",
       "x-stoplight" : {
         "id" : "nxvbrf59xwh8n"
-      }
-    },
-    "direction" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "2mi6vuo2hhjoy"
-      }
-    },
-    "consent" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "p9dlie3d1dd0m"
       }
     }
   }
 };
             defs["DealRegistrationRequest"] = {
   "title" : "DealRegistrationRequest",
+  "required" : [ "accountId", "customerProfile", "details", "inviteContext", "name", "solution", "teamMembers" ],
   "type" : "object",
   "properties" : {
+    "id" : {
+      "type" : "string",
+      "description" : "Null or empty: create new deal, Guid: update existing deal",
+      "format" : "guid",
+      "nullable" : true,
+      "x-stoplight" : {
+        "id" : "lmws16byghje5"
+      }
+    },
     "accountId" : {
       "type" : "string"
     },
@@ -997,7 +935,10 @@
       }
     },
     "solution" : {
-      "$ref" : "#/components/schemas/Solution"
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Solution"
+      }
     },
     "teamMembers" : {
       "type" : "array",
@@ -1012,12 +953,6 @@
       "type" : "boolean",
       "x-stoplight" : {
         "id" : "w6vi66yk1u9wd"
-      }
-    },
-    "marketplacePurchaseIntent" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "0apwy1doypu11"
       }
     },
     "customerEmail" : {
@@ -1063,6 +998,13 @@
       "x-stoplight" : {
         "id" : "cw2mu5m5yl053"
       }
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [ "Won", "Lost", "Error" ],
+      "x-stoplight" : {
+        "id" : "nk5okkmnxggyb"
+      }
     }
   }
 };
@@ -1070,7 +1012,9 @@
   "type" : "object",
   "properties" : {
     "country" : {
+      "pattern" : "ISO country code",
       "type" : "string",
+      "example" : "UK",
       "x-stoplight" : {
         "id" : "k1blnoo953nha"
       }
@@ -1093,7 +1037,9 @@
       }
     },
     "stage" : {
+      "pattern" : "[20,40,60,80]",
       "type" : "string",
+      "example" : "20",
       "x-stoplight" : {
         "id" : "yxu7omkv5pluv"
       }
@@ -1123,12 +1069,27 @@
     }
   }
 };
+            defs["inline_response_200_1"] = {
+  "type" : "object",
+  "properties" : {
+    "token" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "a2ez1eybaoin6"
+      }
+    }
+  }
+};
             defs["InviteContext"] = {
   "title" : "InviteContext",
+  "required" : [ "assistanceRequestCode" ],
   "type" : "object",
   "properties" : {
     "assistanceRequestCode" : {
-      "type" : "string"
+      "pattern" : "Unknown, WorkloadSpecificValueProposition, ProofOfConceptOrDemo, QuotesOrLicensing",
+      "type" : "string",
+      "example" : "ProofOfConceptOrDemo",
+      "default" : "Unknown"
     },
     "invitedBy" : {
       "type" : "string",
@@ -1146,6 +1107,24 @@
       "type" : "string",
       "x-stoplight" : {
         "id" : "sig90qf393smo"
+      }
+    }
+  }
+};
+            defs["login_body"] = {
+  "required" : [ "password", "userName" ],
+  "type" : "object",
+  "properties" : {
+    "userName" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "lab3sfpp2riuw"
+      }
+    },
+    "password" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "ookh8yyumenu1"
       }
     }
   }
@@ -1541,46 +1520,22 @@
       "format" : "date"
     },
     "currency" : {
-      "type" : "number",
-      "format" : "double",
+      "type" : "string",
       "x-stoplight" : {
         "id" : "gcdbvry9m4w3k"
       }
     },
-    "customerAction" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "9uyshs5vckb8d"
-      }
-    },
-    "customerRequestedContact" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "2qp10mjzezy9t"
-      }
-    },
     "dealValue" : {
-      "type" : "string",
+      "type" : "number",
+      "format" : "double",
       "x-stoplight" : {
         "id" : "52di2xzfhi0rj"
-      }
-    },
-    "incentiveLevel" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "iy2o3sv83rr88"
       }
     },
     "notes" : {
       "type" : "string",
       "x-stoplight" : {
         "id" : "tlyguo2ft3i9r"
-      }
-    },
-    "requirements" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "6d9ngjujfjcka"
       }
     }
   }
@@ -1589,10 +1544,16 @@
   "title" : "RefinedCustomer",
   "type" : "object",
   "properties" : {
+    "accountId" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "rcksrjo4dhy4a"
+      }
+    },
     "website" : {
       "type" : "string"
     },
-    "numberOfOpenOppotunities" : {
+    "numberOfOpenOpportunities" : {
       "type" : "string",
       "x-stoplight" : {
         "id" : "02wse2qhg6kd8"
@@ -1604,7 +1565,7 @@
         "id" : "sucj8uiytempv"
       }
     },
-    "cloudCommit" : {
+    "maccEligible" : {
       "type" : "boolean",
       "x-stoplight" : {
         "id" : "ryusxsvkow06q"
@@ -1614,6 +1575,12 @@
       "type" : "string",
       "x-stoplight" : {
         "id" : "1b3rtohzz2ocu"
+      }
+    },
+    "type" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "rk8eumoajj77y"
       }
     }
   },
@@ -1697,12 +1664,6 @@
       "x-stoplight" : {
         "id" : "qp0dc050iuoso"
       }
-    },
-    "" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "gkvdvtyxy6s04"
-      }
     }
   }
 };
@@ -1747,6 +1708,13 @@
                     </li>
                     <li data-group="DealRegistration" data-name="updateSaleStage" class="">
                       <a href="#api-DealRegistration-updateSaleStage">updateSaleStage</a>
+                    </li>
+                  <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
+                    <li data-group="Default" data-name="login" class="">
+                      <a href="#api-Default-login">login</a>
+                    </li>
+                    <li data-group="Default" data-name="updateDeal" class="">
+                      <a href="#api-Default-updateDeal">updateDeal</a>
                     </li>
                   <li class="nav-header" data-group="PrivateOffer"><a href="#api-PrivateOffer">API Methods - PrivateOffer</a></li>
                     <li data-group="PrivateOffer" data-name="createPrivateOffer" class="">
@@ -1832,7 +1800,7 @@
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/customer/get-customers"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/customer/get-customers"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Customer-getCustomers-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2153,7 +2121,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/close-deal"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/close-deal"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-closeDeal-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2529,7 +2497,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/create-deal"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/create-deal"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-createDeal-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2905,7 +2873,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/find-customer"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/find-customer"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-findCustomer-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2923,7 +2891,7 @@ public class DealRegistrationApiExample {
         DealRegistrationApi apiInstance = new DealRegistrationApi();
         Dealregistration_findcustomer_body body = ; // Dealregistration_findcustomer_body | 
         try {
-            array[Customer] result = apiInstance.findCustomer(body);
+            array[CustomerProfile] result = apiInstance.findCustomer(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DealRegistrationApi#findCustomer");
@@ -2942,7 +2910,7 @@ public class DealRegistrationApiExample {
         DealRegistrationApi apiInstance = new DealRegistrationApi();
         Dealregistration_findcustomer_body body = ; // Dealregistration_findcustomer_body | 
         try {
-            array[Customer] result = apiInstance.findCustomer(body);
+            array[CustomerProfile] result = apiInstance.findCustomer(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DealRegistrationApi#findCustomer");
@@ -2962,7 +2930,7 @@ DealRegistrationApi *apiInstance = [[DealRegistrationApi alloc] init];
 
 // Find customer
 [apiInstance findCustomerWith:body
-              completionHandler: ^(array[Customer] output, NSError* error) {
+              completionHandler: ^(array[CustomerProfile] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3014,7 +2982,7 @@ namespace Example
             try
             {
                 // Find customer
-                array[Customer] result = apiInstance.findCustomer(body);
+                array[CustomerProfile] result = apiInstance.findCustomer(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3151,7 +3119,7 @@ except ApiException as e:
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/Customer"
+          "$ref" : "#/components/schemas/CustomerProfile"
         },
         "x-content-type" : "application/json"
       }
@@ -3219,7 +3187,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-DealRegistration-getAllDeals-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/get-all-deals"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/get-all-deals"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-getAllDeals-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3481,7 +3449,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-DealRegistration-getDeal-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/{id}"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-getDeal-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3774,7 +3742,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-DealRegistration-getInitialInfo-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/get-initial-info"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/get-initial-info"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-getInitialInfo-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4033,7 +4001,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/deal-registration/update-sale-stage"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/update-sale-stage"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-DealRegistration-updateSaleStage-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4375,6 +4343,679 @@ except ApiException as e:
                       </div>
                       <hr>
                   </section>
+                <section id="api-Default">
+                  <h1>Default</h1>
+                    <div id="api-Default-login">
+                      <article id="api-Default-login-0" data-group="User" data-name="login" data-version="0">
+                        <div class="pull-left">
+                          <h1>login</h1>
+                          <p>Login</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/login</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-login-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-login-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-login-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-login-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-login-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-login-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-login-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-login-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-login-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-login-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-login-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-login-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/login"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-login-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        Login_body body = ; // Login_body | 
+        try {
+            inline_response_200_1 result = apiInstance.login(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#login");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-login-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        Login_body body = ; // Login_body | 
+        try {
+            inline_response_200_1 result = apiInstance.login(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#login");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-login-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-login-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Login_body *body = ; //  (optional)
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+// Login
+[apiInstance loginWith:body
+              completionHandler: ^(inline_response_200_1 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-login-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var WeTransactApis = require('we_transact_apis');
+
+var api = new WeTransactApis.DefaultApi()
+var opts = { 
+  'body':  // {{Login_body}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.login(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-login-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-login-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class loginExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var body = new Login_body(); // Login_body |  (optional) 
+
+            try
+            {
+                // Login
+                inline_response_200_1 result = apiInstance.login(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.login: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-login-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$body = ; // Login_body | 
+
+try {
+    $result = $api_instance->login($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->login: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-login-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $body = WWW::SwaggerClient::Object::Login_body->new(); # Login_body | 
+
+eval { 
+    my $result = $api_instance->login(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->login: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-login-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+body =  # Login_body |  (optional)
+
+try: 
+    # Login
+    api_response = api_instance.login(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->login: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/login_body"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_login_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_login_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-login-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-login-200-schema">
+                                  <div id='responses-login-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_1"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-login-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-login-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-login-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-updateDeal">
+                      <article id="api-Default-updateDeal-0" data-group="User" data-name="updateDeal" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateDeal</h1>
+                          <p>Update deal</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Update existing co-sell deal</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/deal-registration/update-deal</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-updateDeal-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-updateDeal-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-updateDeal-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-updateDeal-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-updateDeal-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-updateDeal-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-updateDeal-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/deal-registration/update-deal"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-updateDeal-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        DealRegistrationRequest body = ; // DealRegistrationRequest | 
+        try {
+            ApiResponse result = apiInstance.updateDeal(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#updateDeal");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-updateDeal-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        DealRegistrationRequest body = ; // DealRegistrationRequest | 
+        try {
+            ApiResponse result = apiInstance.updateDeal(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#updateDeal");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-updateDeal-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">DealRegistrationRequest *body = ; //  (optional)
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+// Update deal
+[apiInstance updateDealWith:body
+              completionHandler: ^(ApiResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var WeTransactApis = require('we_transact_apis');
+
+var api = new WeTransactApis.DefaultApi()
+var opts = { 
+  'body':  // {{DealRegistrationRequest}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.updateDeal(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-updateDeal-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateDealExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var body = new DealRegistrationRequest(); // DealRegistrationRequest |  (optional) 
+
+            try
+            {
+                // Update deal
+                ApiResponse result = apiInstance.updateDeal(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.updateDeal: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$body = ; // DealRegistrationRequest | 
+
+try {
+    $result = $api_instance->updateDeal($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->updateDeal: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $body = WWW::SwaggerClient::Object::DealRegistrationRequest->new(); # DealRegistrationRequest | 
+
+eval { 
+    my $result = $api_instance->updateDeal(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->updateDeal: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDeal-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+body =  # DealRegistrationRequest |  (optional)
+
+try: 
+    # Update deal
+    api_response = api_instance.update_deal(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->updateDeal: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/DealRegistrationRequest"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateDeal_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateDeal_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateDeal-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateDeal-200-schema">
+                                  <div id='responses-updateDeal-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ApiResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateDeal-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateDeal-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateDeal-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Bad Request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateDeal-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateDeal-400-schema">
+                                  <div id='responses-updateDeal-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad Request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ApiResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateDeal-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateDeal-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateDeal-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-PrivateOffer">
                   <h1>PrivateOffer</h1>
                     <div id="api-PrivateOffer-createPrivateOffer">
@@ -4412,7 +5053,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: multipart/form-data"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/create-offer"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/create-offer"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-createPrivateOffer-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4777,7 +5418,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/delete-offer"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/delete-offer"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-deleteOffer-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5152,7 +5793,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-PrivateOffer-getAllOffers-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/get-all-offers"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/get-all-offers"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-getAllOffers-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5414,7 +6055,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-PrivateOffer-getAllProductsAndPlans-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/get-all-products-and-plans"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/get-all-products-and-plans"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-getAllProductsAndPlans-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5676,7 +6317,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-PrivateOffer-getAllResellers-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/get-all-resellers"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/get-all-resellers"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-getAllResellers-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5938,7 +6579,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-PrivateOffer-getPrivateOfferById-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/{id}"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-getPrivateOfferById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6280,7 +6921,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/publish-offer"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/publish-offer"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-publishOffer-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6657,7 +7298,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: multipart/form-data"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/update-offer"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/update-offer"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-updatePrivateOffer-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -7022,7 +7663,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/DANGNGO/WeTransact/1.0.0/private-offer/validate-offer-name"</code></pre>
+"https://virtserver.swaggerhub.com/DANGNGO_1/WeTransact/1.0.0/private-offer/validate-offer-name"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-PrivateOffer-validateOfferName-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
