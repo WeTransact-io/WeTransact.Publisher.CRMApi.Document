@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awssome Publisher CRM API Documentation</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background-color: var(--background-color);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Controller Cards */
+        .controller-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .controller-card {
+            background: var(--surface-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .controller-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .controller-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .controller-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .controller-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .controller-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Endpoints */
+        .endpoints {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .endpoint {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .endpoint:hover {
+            border-color: var(--primary-color);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--background-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .endpoint-header:hover {
+            background: #f1f5f9;
+        }
+
+        .method-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-right: 1rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .method-get { background: #dcfce7; color: #166534; }
+        .method-post { background: #dbeafe; color: #1e40af; }
+        .method-put { background: #fef3c7; color: #92400e; }
+        .method-patch { background: #f3e8ff; color: #7c3aed; }
+        .method-delete { background: #fee2e2; color: #dc2626; }
+
+        .endpoint-path {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .endpoint-summary {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-left: auto;
+        }
+
+        .endpoint-details {
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .endpoint-details.active {
+            display: block;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .parameter-table th,
+        .parameter-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parameter-table th {
+            background: var(--background-color);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .parameter-table td {
+            color: var(--text-secondary);
+        }
+
+        .required {
+            color: var(--error-color);
+            font-weight: 500;
+        }
+
+        .optional {
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        .response-codes {
+            display: grid;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .response-code {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .response-200 { background: #dcfce7; color: #166534; }
+        .response-201 { background: #dcfce7; color: #166534; }
+        .response-204 { background: #dcfce7; color: #166534; }
+        .response-400 { background: #fee2e2; color: #dc2626; }
+        .response-404 { background: #fee2e2; color: #dc2626; }
+        .response-500 { background: #fee2e2; color: #dc2626; }
+
+        .status-code {
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* Models Section */
+        .model-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .model-header {
+            background: var(--background-color);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .model-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .model-properties {
+            padding: 1rem;
+        }
+
+        .property {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property:last-child {
+            border-bottom: none;
+        }
+
+        .property-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .property-type {
+            color: var(--text-secondary);
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .controller-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .endpoint-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .parameter-table {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .endpoint-details.active {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-4 { margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Awssome Publisher CRM API</h1>
+            <p>Comprehensive API documentation for managing private offers, deal registrations, and customer targeting</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#private-offers">Private Offers</a></li>
+                    <li><a href="#deal-registration">Deal Registration</a></li>
+                    <li><a href="#target-customer">Target Customer</a></li>
+                    <li><a href="#models">Data Models</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2 class="section-title">API Overview</h2>
+                <div class="controller-card">
+                    <h3 class="mb-2">Base URL</h3>
+                    <div class="code-block">https://api.awssome.com/api</div>
+                    
+                    <h3 class="mb-2 mt-4">Authentication</h3>
+                    <p class="mb-2">All endpoints require authentication with the following roles:</p>
+                    <div class="code-block">SuperAdmin, Administrator, Sales, Marketing, Finance, Legal</div>
+                    
+                    <h3 class="mb-2 mt-4">Response Format</h3>
+                    <p class="mb-2">All responses follow a consistent format:</p>
+                    <div class="code-block">{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": { ... }
+}</div>
+                </div>
+            </section>
+
+            <!-- Private Offers Controller -->
+            <section id="private-offers" class="section">
+                <h2 class="section-title">Private Offers API</h2>
+                <div class="controller-grid">
+                    <div class="controller-card">
+                        <div class="controller-header">
+                            <h3 class="controller-title">PrivateOfferController</h3>
+                            <span class="controller-badge">6 endpoints</span>
+                        </div>
+                        <p class="controller-description">
+                            Manage private offers for AWS Marketplace products including creation, updates, deletion, and product/plan management.
+                        </p>
+                        
+                        <div class="endpoints">
+                            <!-- Get All Private Offers -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/privateoffer</span>
+                                    <span class="endpoint-summary">Get all private offers</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves a paginated list of all private offers with optional filtering.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Query Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>page</td>
+                                                    <td>integer</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Page number for pagination</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>size</td>
+                                                    <td>integer</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Number of items per page</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-200">
+                                                <span class="status-code">200</span>
+                                                <span>Success - Returns list of private offers</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Get Private Offer by ID -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/privateoffer/{id}</span>
+                                    <span class="endpoint-summary">Get private offer by ID</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves a specific private offer by its unique identifier.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Path Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>id</td>
+                                                    <td>Guid</td>
+                                                    <td class="required">Required</td>
+                                                    <td>Unique identifier of the private offer</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-200">
+                                                <span class="status-code">200</span>
+                                                <span>Success - Returns private offer details</span>
+                                            </div>
+                                            <div class="response-code response-404">
+                                                <span class="status-code">404</span>
+                                                <span>Private offer not found</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Create Private Offer -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/privateoffer</span>
+                                    <span class="endpoint-summary">Create new private offer</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Creates a new private offer with the provided details.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <p>Content-Type: application/json</p>
+                                        <div class="code-block">{
+  "awsProductId": "string (required)",
+  "privateOfferName": "string (required, max 150 chars)",
+  "offerDescription": "string (max 255 chars)",
+  "buyerAccountId": "string (required, 12 digits)",
+  "contractStartingType": "enum (required)",
+  "contractStartDate": "datetime (required)",
+  "contractDuration": "number (required, 1-60)",
+  "billingFrequency": "string (required)",
+  "currency": "string (required)",
+  "contractValue": "string (required)",
+  "expirationDate": "datetime (required)",
+  "usageEndDate": "datetime (required)",
+  "pricingModel": "string (required)"
+}</div>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-201">
+                                                <span class="status-code">201</span>
+                                                <span>Created - Private offer created successfully</span>
+                                            </div>
+                                            <div class="response-code response-400">
+                                                <span class="status-code">400</span>
+                                                <span>Bad Request - Invalid input data</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Update Private Offer -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-patch">PATCH</span>
+                                    <span class="endpoint-path">/api/privateoffer/{id}</span>
+                                    <span class="endpoint-summary">Update private offer</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Updates an existing private offer with partial data.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Path Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>id</td>
+                                                    <td>Guid</td>
+                                                    <td class="required">Required</td>
+                                                    <td>Unique identifier of the private offer</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-200">
+                                                <span class="status-code">200</span>
+                                                <span>Success - Private offer updated</span>
+                                            </div>
+                                            <div class="response-code response-400">
+                                                <span class="status-code">400</span>
+                                                <span>Bad Request - Invalid input data</span>
+                                            </div>
+                                            <div class="response-code response-404">
+                                                <span class="status-code">404</span>
+                                                <span>Private offer not found</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delete Private Offer -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-delete">DELETE</span>
+                                    <span class="endpoint-path">/api/privateoffer/{id}</span>
+                                    <span class="endpoint-summary">Delete private offer</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Deletes a private offer permanently.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-204">
+                                                <span class="status-code">204</span>
+                                                <span>No Content - Private offer deleted</span>
+                                            </div>
+                                            <div class="response-code response-400">
+                                                <span class="status-code">400</span>
+                                                <span>Bad Request - Cannot delete offer</span>
+                                            </div>
+                                            <div class="response-code response-404">
+                                                <span class="status-code">404</span>
+                                                <span>Private offer not found</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Get Products and Plans -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/privateoffer/products-plans</span>
+                                    <span class="endpoint-summary">Get products and plans</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves all available products with their associated pricing plans.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Response Codes</h4>
+                                        <div class="response-codes">
+                                            <div class="response-code response-200">
+                                                <span class="status-code">200</span>
+                                                <span>Success - Returns products and plans</span>
+                                            </div>
+                                            <div class="response-code response-500">
+                                                <span class="status-code">500</span>
+                                                <span>Internal Server Error</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deal Registration Controller -->
+            <section id="deal-registration" class="section">
+                <h2 class="section-title">Deal Registration API</h2>
+                <div class="controller-grid">
+                    <div class="controller-card">
+                        <div class="controller-header">
+                            <h3 class="controller-title">DealRegistrationController</h3>
+                            <span class="controller-badge">8 endpoints</span>
+                        </div>
+                        <p class="controller-description">
+                            Manage deal registrations and AWS opportunity integrations including creation, updates, stage changes, and invitation handling.
+                        </p>
+                        
+                        <div class="endpoints">
+                            <!-- Get All Deals -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/dealregistration</span>
+                                    <span class="endpoint-summary">Get all deal registrations</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves all deal registrations with optional pagination.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Query Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>page</td>
+                                                    <td>integer</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Page number for pagination</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>size</td>
+                                                    <td>integer</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Number of items per page</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>top</td>
+                                                    <td>integer</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Limit number of results</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Get Deal by ID -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/dealregistration/{id}</span>
+                                    <span class="endpoint-summary">Get deal registration by ID</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves a specific deal registration by opportunity ID.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Create Deal -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/dealregistration</span>
+                                    <span class="endpoint-summary">Create new deal registration</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Creates a new deal registration with AWS Partner Central integration.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Query Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>isDraft</td>
+                                                    <td>boolean</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Save as draft (default: true)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <div class="code-block">{
+  "customerCompanyName": "string (required, max 120 chars)",
+  "customerIndustryVertical": "string (required)",
+  "customerWebsite": "string (required, valid URL)",
+  "customerCountry": "string (required)",
+  "customerZipCode": "string (required, max 20 chars)",
+  "projectTitle": "string (required, max 255 chars)",
+  "customerBusinessProblem": "string (required, 20-2000 chars)",
+  "solutionsOffered": "string (required)",
+  "estimatedMRR": "string (required, numeric)",
+  "targetCloseDate": "string (required, YYYY-MM-DD)",
+  "partnerContactFirstName": "string (required, max 80 chars)",
+  "partnerContactLastName": "string (required, max 80 chars)",
+  "partnerContactEmail": "string (required, valid email)"
+}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Update Deal -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-put">PUT</span>
+                                    <span class="endpoint-path">/api/dealregistration</span>
+                                    <span class="endpoint-summary">Update deal registration</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Updates an existing deal registration.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Query Parameters</h4>
+                                        <table class="parameter-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>isDraft</td>
+                                                    <td>boolean</td>
+                                                    <td class="optional">Optional</td>
+                                                    <td>Save as draft (default: true)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Change Stage -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/dealregistration/change-stage</span>
+                                    <span class="endpoint-summary">Change deal stage</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Changes the stage of an existing deal registration.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <div class="code-block">{
+  "opportunityId": "string (required)",
+  "stage": "string (required)"
+}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Get Pending Invitations -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="endpoint-path">/api/dealregistration/invitations</span>
+                                    <span class="endpoint-summary">Get pending invitations</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Retrieves all pending AWS engagement invitations.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accept Invitation -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/dealregistration/invitations/accept</span>
+                                    <span class="endpoint-summary">Accept invitation</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Accepts an AWS engagement invitation.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <div class="code-block">{
+  "invitationId": "string (required)"
+}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reject Invitation -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/dealregistration/invitations/reject</span>
+                                    <span class="endpoint-summary">Reject invitation</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Rejects an AWS engagement invitation with optional reason.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <div class="code-block">{
+  "invitationId": "string (required)",
+  "rejectionReason": "string (optional)"
+}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Target Customer Controller -->
+            <section id="target-customer" class="section">
+                <h2 class="section-title">Target Customer API</h2>
+                <div class="controller-grid">
+                    <div class="controller-card">
+                        <div class="controller-header">
+                            <h3 class="controller-title">TargetCustomerController</h3>
+                            <span class="controller-badge">1 endpoint</span>
+                        </div>
+                        <p class="controller-description">
+                            Manage customer targeting and refinement operations.
+                        </p>
+                        
+                        <div class="endpoints">
+                            <!-- Refine Customers -->
+                            <div class="endpoint">
+                                <div class="endpoint-header" onclick="toggleEndpoint(this)">
+                                    <span class="method-badge method-post">POST</span>
+                                    <span class="endpoint-path">/api/targetcustomer</span>
+                                    <span class="endpoint-summary">Refine customers</span>
+                                </div>
+                                <div class="endpoint-details">
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Description</h4>
+                                        <p>Refines customer targeting based on provided criteria.</p>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h4 class="detail-title">Request Body</h4>
+                                        <div class="code-block">[
+  {
+    // CustomerRequest object properties
+  }
+]</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Models Section -->
+            <section id="models" class="section">
+                <h2 class="section-title">Data Models</h2>
+                
+                <!-- Private Offer Models -->
+                <div class="model-card">
+                    <div class="model-header">
+                        <h3 class="model-title">PrivateOfferDto</h3>
+                    </div>
+                    <div class="model-properties">
+                        <div class="property">
+                            <span class="property-name">OfferId</span>
+                            <span class="property-type">Guid</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">AWSOfferId</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">AWSProductId</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">PrivateOfferName</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">OfferDescription</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">OfferStatus</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">BuyerAccountId</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">ExpirationDate</span>
+                            <span class="property-type">DateTime?</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">ContractDuration</span>
+                            <span class="property-type">short</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">ContractValue</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">Currency</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">PricingModel</span>
+                            <span class="property-type">string</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Registration Models -->
+                <div class="model-card">
+                    <div class="model-header">
+                        <h3 class="model-title">DealRegistrationDto</h3>
+                    </div>
+                    <div class="model-properties">
+                        <div class="property">
+                            <span class="property-name">OpportunityId</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">CustomerCompanyName</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">CustomerIndustryVertical</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">CustomerWebsite</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">ProjectTitle</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">CustomerBusinessProblem</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">EstimatedMRR</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">TargetCloseDate</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">PartnerContactFirstName</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">PartnerContactLastName</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">PartnerContactEmail</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">Stage</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">Status</span>
+                            <span class="property-type">string</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Response Model -->
+                <div class="model-card">
+                    <div class="model-header">
+                        <h3 class="model-title">ApiResponse&lt;T&gt;</h3>
+                    </div>
+                    <div class="model-properties">
+                        <div class="property">
+                            <span class="property-name">Success</span>
+                            <span class="property-type">boolean</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">Message</span>
+                            <span class="property-type">string</span>
+                        </div>
+                        <div class="property">
+                            <span class="property-name">Data</span>
+                            <span class="property-type">T</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function toggleEndpoint(header) {
+            const details = header.nextElementSibling;
+            const isActive = details.classList.contains('active');
+            
+            // Close all other endpoints
+            document.querySelectorAll('.endpoint-details.active').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Toggle current endpoint
+            if (!isActive) {
+                details.classList.add('active');
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active navigation item
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '';
+                link.style.backgroundColor = '';
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.style.color = 'var(--primary-color)';
+                    link.style.backgroundColor = 'var(--background-color)';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
